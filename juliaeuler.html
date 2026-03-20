@@ -46,14 +46,18 @@
           <li>Solve the Poisson equation for the scalar potential $\phi$ to enforce incompressibility: $$\nabla^2 \phi = \frac{1}{\Delta t} \nabla \cdot \mathbf{u}^*$$</li>
           <li>Update the velocity field using the computed scalar potential: $$\mathbf{u} = \mathbf{u}^* - \nabla \phi$$</li>
         </ol>
-        <figure>
+      </p>
+      <p>
+        Julia provides simple annotations for optimisations and parallelism, which makes prototyping 
+        and testing numerical methods very easy, and the performance is often comparable to more traditional languages like C++ or Fortran without needing to write any low-level code.
+      </p>
+      <figure>
           <picture>
             <source type="image/avif" srcset="resources/juliaeuler/example.avif">
             <img src="resources/juliaeuler/example.avif" alt="JuliaEuler snapshot" loading="lazy">
           </picture>
-          <figcaption>JuliaEuler — slices of ABC flow</figcaption>
-        </figure>
-      </p>
+          <figcaption>JuliaEuler — slices of a N = 343,000 (70x70x70) simulation of ABC flow, coloured by fluid velocity. Simulated on 12 CPU cores in ~ 30 minutes.</figcaption>
+      </figure>
       <p>
         <a href="https://github.com/xvois/JuliaEuler" target="_blank" rel="noopener noreferrer">
           View JuliaEuler on GitHub

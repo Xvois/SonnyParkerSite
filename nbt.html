@@ -33,21 +33,38 @@
         NBT is a simple N-body test in C++ using the Barnes-Hut tree algorithm for efficient force calculations. 
         It serves as a basic implementation to explore realtime gravitational interactions in astrophysical systems and can be used for educational purposes or as a starting point for more complex simulations.
       </p>
-      <figure>
-        <picture>
-          <source type="image/png" srcset="resources/nbt/nbt-2k-tree.png">
-          <img src="resources/nbt/nbt-2k-tree.png" alt="NBT snapshot" loading="lazy">
-        </picture>
-        <figcaption>NBT — snapshot of the Barnes-Hut tree structure</figcaption>
-      </figure>
       <p>
+        This is intended very much as a playground for testing systems and dynamics, but also shows the limitations of naive implementations of the Barnes-Hut algorithm and
+        the requirments for more careful implementations or alternative algorithms for large N-body simulations.
+      </p>
+      <p>
+        It also taught me that cross-platform C++ toolchains are a nightmare.
+      </p>
+      <figure aria-labelledby="nbt-demo-title">
+        <video
+          controls
+          preload="metadata"
+          playsinline
+          poster="resources/nbt/nbt-2k-tree.png"
+          class="responsive-video"
+          aria-label="NBT simulation video"
+        >
+          <source src="resources/nbt/example-opt.webm" type="video/webm">
+          <source src="resources/nbt/example-opt.mp4" type="video/mp4">
+          <source src="resources/nbt/example.mov" type="video/quicktime">
+          <p>Your browser does not support embedded video. You can download it directly:
+            <a href="resources/nbt/example-opt.mp4" download>Download example-opt.mp4</a> or
+            <a href="resources/nbt/example.mov" download>Download example.mov</a>
+          </p>
+        </video>
+        <figcaption id="nbt-demo-title">A "dry" galaxy merger event simulated with 10,000 particles. Simulated on 8 CPU cores in ~ 20 minutes.</figcaption>
+      </figure>
+            <p>
         <a href="https://github.com/Xvois/NBT" target="_blank" rel="noopener noreferrer">
           View NBT on GitHub
         </a>
       </p>
-      <p><a href="index.html">Back to homepage</a></p>
     </main>
-
     <script defer src="script.js"></script>
   </body>
 </html>
