@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EDGE | Sonny Parker</title>
+    <meta name="description" content="JuliaEuler project page." />
+    <!-- Load stylesheet without blocking render -->
+    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+
+    <!-- Preconnect to CDN and preload hero image -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preload" href="/resources/juliaeuler/example.avif" as="image">
+
+    <!-- MathJax: load async to avoid blocking rendering -->
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }, svg: { fontCache: 'global' } };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </head>
+  <body>
+    <header class="dirnav" aria-label="Path">
+      <nav class="breadcrumbs">
+        <button class="crumb-back" type="button" onclick="history.back()" aria-label="Go back">←</button>
+        <span class="sep">/</span>
+        <a class="crumb" href="index.html">sonnyparker</a>
+        <span class="sep">/</span>
+        <span class="current">edge</span>
+      </nav>
+    </header>
+    <main>
+      <h1>EDGE (Masters)</h1>
+      <p>
+        Dwarf galaxies are testbeds for multi-scale galactic events from single stars (SNe) to the entire halo (ram-stripping, open-box modelling). In this Masters project I am using collected EDGE 
+        <a href="https://edge-simulation.github.io">(Engineering Dwarfs at Galaxy Formation's Edge)</a> data to analyse the distribution of molecular hydrogen in dwarf galaxies. 
+      </p>
+      <p>
+        The hope is to calibrate the $\alpha_{\text{CO}}$ conversion parameter to help observational campaigns better estimate the molecular hydrogen content of dwarf galaxies, 
+        and to understand the physical processes that drive the formation and destruction of molecular hydrogen in these environments.
+      </p>
+      <p>
+        For more information, please see the 
+        <a href="resources/edge/MPhys_Proposal.pdf" target="_blank" rel="noopener">proposal</a>
+      </p>
+    <script defer src="script.js"></script>
+  </body>
+</html>
