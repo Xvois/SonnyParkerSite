@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/index.html</loc>
+    <loc>https://www.sonnyparker.co.uk/</loc>
   </url>
   <url>
-    <loc>/nbt.html</loc>
+    <loc>https://www.sonnyparker.co.uk/research.html</loc>
   </url>
   <url>
-    <loc>/juliaeuler.html</loc>
+    <loc>https://www.sonnyparker.co.uk/photography.html</loc>
+  </url>
+  <url>
+    <loc>https://www.sonnyparker.co.uk/edge.html</loc>
+  </url>
+  <url>
+    <loc>https://www.sonnyparker.co.uk/nbt.html</loc>
+  </url>
+  <url>
+    <loc>https://www.sonnyparker.co.uk/juliaeuler.html</loc>
   </url>
 </urlset>
