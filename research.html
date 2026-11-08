@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Research — Sonny Parker</title>
-    <meta name="description" content="Research by Sonny Parker: molecular hydrogen in dwarf galaxy simulations, galaxy dynamics and numerical astrophysics." />
+    <meta name="description" content="Research: molecular hydrogen in dwarf galaxy simulations, plus project code." />
     <meta name="theme-color" content="#f6f5f1" />
     <link rel="canonical" href="https://www.sonnyparker.co.uk/research.html" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Research — Sonny Parker" />
-    <meta property="og:description" content="Molecular hydrogen in dwarf galaxy simulations, and the code behind it." />
+    <meta property="og:description" content="Molecular hydrogen in dwarf galaxy simulations, plus project code." />
     <meta property="og:url" content="https://www.sonnyparker.co.uk/research.html" />
 
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -47,35 +47,31 @@
     <main class="page">
       <div class="wrap">
         <section class="research-head">
-          <p class="kicker">Research</p>
-          <h1>Galaxies, their cores, and the gas between the stars.</h1>
+          <h1>Research</h1>
           <p class="lede">
-            I am a computational astrophysics student at the University of Bath, interested in the
-            dynamics of galaxies, their nuclei, and the interactions between them and supermassive
-            black holes.
+            Computational astrophysics student at the University of Bath. Interests: galaxy dynamics,
+            galactic cores, and SMBH interactions.
           </p>
         </section>
 
         <article class="thesis" aria-labelledby="thesis-title">
           <div class="thesis__body">
-            <p class="kicker">Masters thesis — MPhys</p>
+            <p class="kicker">Masters thesis</p>
             <h2 class="thesis__title" id="thesis-title">
               Molecular hydrogen in dwarf galaxy simulations
             </h2>
             <p>
               Dwarf galaxies are testbeds for multi-scale galactic events, from single supernovae to
-              whole-halo processes such as ram stripping and open-box modelling. Using the
+              whole-halo processes such as ram stripping. This project uses
               <a href="https://edge-simulation.github.io" target="_blank" rel="noopener"
                 >EDGE (Engineering Dwarfs at Galaxy Formation's Edge)</a
               >
-              simulation suite, I am analysing how molecular hydrogen is distributed inside these
-              systems.
+              data to analyse the distribution of molecular hydrogen in dwarf galaxies.
             </p>
             <p>
-              The aim is to calibrate the $\alpha_{\text{CO}}$ conversion parameter so that
-              observational campaigns can better estimate the molecular hydrogen content of dwarf
-              galaxies — and to understand the physical processes that drive H<sub>2</sub> formation
-              and destruction in these environments.
+              The aim is to calibrate the $\alpha_{\text{CO}}$ conversion parameter, so that
+              observational campaigns can estimate the molecular hydrogen content of dwarf galaxies
+              more accurately.
             </p>
           </div>
 
@@ -87,7 +83,7 @@
               </div>
               <div>
                 <dt>Methods</dt>
-                <dd>EDGE simulations · H<sub>2</sub> chemistry · α<sub>CO</sub> calibration</dd>
+                <dd>EDGE simulations, H<sub>2</sub> chemistry</dd>
               </div>
               <div>
                 <dt>Status</dt>
@@ -104,7 +100,7 @@
         </article>
 
         <div class="sectionlabel">
-          <h2>Selected work</h2>
+          <h2>Projects</h2>
           <span class="rule" aria-hidden="true"></span>
           <span class="count">02</span>
         </div>
@@ -112,22 +108,16 @@
         <ul class="worklist">
           <li>
             <a href="nbt.html">
-              <span class="name">NBT — N-body test</span>
-              <span class="desc">
-                A Barnes–Hut tree-code in C++ for real-time gravitational interactions, and a study
-                of where the naive implementation stops being good enough.
-              </span>
-              <span class="tag">C++ · Barnes–Hut</span>
+              <span class="name">NBT</span>
+              <span class="desc">N-body test in C++ using the Barnes–Hut tree algorithm.</span>
+              <span class="tag">C++</span>
             </a>
           </li>
           <li>
             <a href="juliaeuler.html">
-              <span class="name">JuliaEuler — incompressible flow</span>
-              <span class="desc">
-                An incompressible fluid solver built on Chorin's projection method, written as an
-                exercise in numerical methods for the Navier–Stokes equations.
-              </span>
-              <span class="tag">Julia · CFD</span>
+              <span class="name">JuliaEuler</span>
+              <span class="desc">Incompressible fluid solver in Julia using Chorin's projection method.</span>
+              <span class="tag">Julia</span>
             </a>
           </li>
         </ul>

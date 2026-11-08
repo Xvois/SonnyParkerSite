@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Photography — Sonny Parker</title>
-    <meta name="description" content="Photographs by Sonny Parker, arranged by dominant colour." />
+    <meta name="description" content="Photographs sorted by dominant colour." />
     <meta name="theme-color" content="#f6f5f1" />
     <link rel="canonical" href="https://www.sonnyparker.co.uk/photography.html" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Photography — Sonny Parker" />
-    <meta property="og:description" content="Photographs arranged by dominant colour." />
+    <meta property="og:description" content="Photographs sorted by dominant colour." />
     <meta property="og:url" content="https://www.sonnyparker.co.uk/photography.html" />
 
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -43,12 +43,8 @@
       <div class="wrap">
         <section class="gallery-head">
           <div>
-            <p class="kicker">Photography</p>
-            <h1>Sorted by colour.</h1>
-            <p class="lede">
-              Every frame is filed by the colour it is mostly made of, so the wall runs the spectrum
-              from red through violet and out into black and white.
-            </p>
+            <h1>Photography</h1>
+            <p class="lede">Photographs sorted by dominant colour. Select a colour to highlight it.</p>
           </div>
           <p class="count" id="photo-count" aria-live="polite">—</p>
         </section>
@@ -64,19 +60,15 @@
         <div class="empty" id="empty" hidden>
           <h2>No photographs yet</h2>
           <p>
-            Drop image files into <code>resources/photos/</code> and run
-            <code>python3 scripts/photos.py</code>. The script builds thumbnails, works out each
-            photograph's dominant colour, and writes <code>photos.json</code> for this page.
+            Add images to <code>resources/photos/</code> and run
+            <code>python3 scripts/photos.py</code>.
           </p>
         </div>
 
         <div class="wall" id="wall" aria-label="Photographs arranged by colour"></div>
 
         <div class="dropzone" id="dropzone">
-          <span>
-            <strong>Preview a shoot:</strong> drag images anywhere onto this page to see where they
-            would land in the spectrum. Nothing is uploaded — it stays in your browser.
-          </span>
+          <span>Drag images here to preview where they sort. Nothing is uploaded.</span>
           <span>
             <label class="chip" for="file-input" style="cursor: pointer">Choose files</label>
             <input id="file-input" type="file" accept="image/*" multiple hidden />
