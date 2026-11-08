@@ -279,6 +279,8 @@
     status.textContent =
       state.selection === "all"
         ? "All photographs"
+        : shown === 0
+        ? `${selectionLabel(state.selection)} — none yet`
         : `${selectionLabel(state.selection)} — ${shown} of ${list.length}`;
 
     for (const btn of colourbar.querySelectorAll("[data-sel]")) {
