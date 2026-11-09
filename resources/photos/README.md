@@ -5,37 +5,41 @@ arranged by its dominant colour.
 
 ## Adding photographs
 
-1. Drop the image files in here — `jpg`, `png`, `webp`, `avif` and `tiff` all
-   work. HEIC from an iPhone needs converting first (Preview → Export → JPEG).
-2. Run the builder from the repo root:
+1. Keep the camera originals wherever you like — they are not published.
+2. Point the builder at them:
 
    ```sh
-   python3 scripts/photos.py
+   python3 scripts/photos.py --src ~/Pictures/icloud-shared-album
    ```
 
-   It orients each file correctly, writes a web-sized thumbnail into `thumbs/`,
-   works out the dominant colour, and rewrites `photos.json`.
+   It orients each frame, writes a web-sized JPEG into `thumbs/` (1400px long
+   edge by default), works out the dominant colour, and rewrites `photos.json`.
 
-3. Reload `photography.html`. To publish, commit **both** the image and
-   `photos.json` (and `thumbs/`) — the page is static, so nothing is generated
-   at deploy time.
-
-Useful flags:
+3. Reload `photography.html`. To publish, commit `photos.json` and `thumbs/` —
+   the page is static, so nothing is generated at deploy time.
 
 | Command | What it does |
 |---|---|
-| `python3 scripts/photos.py` | Rebuild thumbnails and the manifest |
-| `python3 scripts/photos.py --clean` | Also delete thumbnails whose source is gone |
-| `python3 scripts/photos.py --max 1400` | Bigger thumbnails (default 720px long edge) |
+| `python3 scripts/photos.py --src DIR` | Build web images + manifest from DIR |
+| `python3 scripts/photos.py --clean` | Also delete web images whose source is gone |
+| `python3 scripts/photos.py --max 2000` | Larger web images (default 1400px) |
+
+JPEG, PNG, WebP, AVIF and TIFF are read. HEIC is skipped — export a JPEG first.
+
+## Layout
+
+The wall is justified rows: each row gets one height and every photograph's
+width follows its own aspect ratio, so landscape and portrait frames sit in the
+same band instead of in fixed columns. Row heights are recomputed on resize.
 
 ## Captions
 
-The alt text is empty by default — a photograph wall is decorative. To caption
-one, drop a text file next to it with the same name:
+Alt text is empty by default. To caption one, drop a text file next to the
+original with the same name; its first line becomes the alt text:
 
 ```
-IMG_4021.jpg
-IMG_4021.txt   ← first line becomes the alt text
+IMG_4021.JPG
+IMG_4021.txt
 ```
 
 ## How the sorting works

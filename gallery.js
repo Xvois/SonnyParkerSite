@@ -179,7 +179,10 @@
     return best.name;
   }
 
-  /* ---------------------------------------------------------------- layout */
+  const MIN_ASPECT = 0.42;
+  const MAX_ASPECT = 3.4;
+
+  /* -------------------------------------------------------------- layout */
 
   function buildFigure(p) {
     const fig = document.createElement("figure");
@@ -235,28 +238,49 @@
     return state.nodes.get(p.id);
   }
 
+  function aspectOf(p) {
+    const a = (p.w || 1) / (p.h || 1);
+    return Math.min(MAX_ASPECT, Math.max(MIN_ASPECT, a));
+  }
+
   function layout() {
     const list = all();
     wall.innerHTML = "";
     const width = wall.clientWidth || 1100;
-    const cols = Math.max(2, Math.min(5, Math.floor(width / 300)));
-    const columns = [];
-    const heights = [];
-    for (let i = 0; i < cols; i++) {
-      const col = document.createElement("div");
-      col.className = "wall__col";
-      wall.append(col);
-      columns.push(col);
-      heights.push(0);
-    }
+    const gap = parseFloat(getComputedStyle(wall).getPropertyValue("--wall-gap")) || 12;
+    // One height per row and widths driven by each photograph's aspect ratio:
+    // a landscape and a portrait sit in the same band, and the colour order
+    // runs straight across instead of dropping into columns.
+    const target = Math.min(300, Math.max(150, Math.round(width * 0.26)));
+
+    let row = [];
+    let sum = 0;
+
+    const flush = (items, height, tail = false) => {
+      const rowEl = document.createElement("div");
+      rowEl.className = tail ? "wall__row wall__row--tail" : "wall__row";
+      rowEl.style.height = `${height.toFixed(2)}px`;
+      for (const p of items) {
+        const node = nodeFor(p);
+        node.style.width = `${(aspectOf(p) * height).toFixed(2)}px`;
+        rowEl.append(node);
+      }
+      wall.append(rowEl);
+    };
 
     for (const p of list) {
-      // Shortest-column placement keeps reading order left-to-right, which is
-      // what makes the wall read as a spectrum rather than a stack.
-      let target = 0;
-      for (let i = 1; i < cols; i++) if (heights[i] < heights[target]) target = i;
-      columns[target].append(nodeFor(p));
-      heights[target] += (p.h / p.w) * 0.92 + 0.08 + 10 / 270;
+      row.push(p);
+      sum += aspectOf(p);
+      const height = (width - gap * (row.length - 1)) / sum;
+      if (height <= target) {
+        flush(row, height);
+        row = [];
+        sum = 0;
+      }
+    }
+    if (row.length) {
+      const height = Math.min(target, (width - gap * (row.length - 1)) / sum);
+      flush(row, height, true);
     }
 
     applySelection();

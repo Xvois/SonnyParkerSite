@@ -14,9 +14,14 @@ drag-and-drop preview sorts into the same place as the published photograph.
 
 Usage
 -----
-    python3 scripts/photos.py            # build / rebuild everything
+    python3 scripts/photos.py --src ~/Pictures/icloud-shared-album
+    python3 scripts/photos.py            # re-generate thumbnails from sources in place
     python3 scripts/photos.py --clean    # also delete orphaned thumbnails
-    python3 scripts/photos.py --max 1600 # thumbnail long edge (default 720)
+    python3 scripts/photos.py --max 2000 # web image long edge (default 1400)
+
+Originals are never published: only the resized web image in ``thumbs/`` is
+referenced by ``photos.json``, so the repository stays small. Point ``--src`` at
+wherever the camera originals live.
 
 Optional caption: drop a sidecar text file next to the image with the same
 stem, e.g. ``resources/photos/IMG_4021.txt``, and its first line is used as
@@ -146,20 +151,20 @@ def caption_for(path: Path) -> str:
     return ""
 
 
-def build(max_edge: int, clean: bool) -> int:
-    if not PHOTO_DIR.is_dir():
-        sys.exit(f"no photo directory at {PHOTO_DIR}")
-    THUMB_DIR.mkdir(parents=True, exist_ok=True)
+def build(src: Path, out: Path, max_edge: int, clean: bool) -> int:
+    if not src.is_dir():
+        sys.exit(f"no photo directory at {src}")
+    thumb_dir = out / "thumbs"
+    thumb_dir.mkdir(parents=True, exist_ok=True)
+    manifest = out / "photos.json"
 
     files = sorted(
         p
-        for p in PHOTO_DIR.iterdir()
+        for p in src.rglob("*")
         if p.is_file() and p.suffix.lower() in SUPPORTED and not p.name.startswith(".")
     )
     skipped = sorted(
-        p
-        for p in PHOTO_DIR.iterdir()
-        if p.is_file() and p.suffix.lower() in {".heic", ".heif"}
+        p for p in src.rglob("*") if p.is_file() and p.suffix.lower() in {".heic", ".heif"}
     )
     for p in skipped:
         print(f"  skipped {p.name}: HEIC needs pillow-heif; export a JPEG instead")
@@ -169,7 +174,7 @@ def build(max_edge: int, clean: bool) -> int:
 
     for path in files:
         rel_thumb = f"thumbs/{path.stem}.jpg"
-        thumb_path = PHOTO_DIR / rel_thumb
+        thumb_path = thumb_dir / f"{path.stem}.jpg"
         try:
             with Image.open(path) as im:
                 im = ImageOps.exif_transpose(im)
@@ -187,7 +192,7 @@ def build(max_edge: int, clean: bool) -> int:
         written.add(thumb_path.name)
         entries.append(
             {
-                "file": path.name,
+                "file": rel_thumb,
                 "thumb": rel_thumb,
                 "w": width,
                 "h": height,
@@ -201,22 +206,24 @@ def build(max_edge: int, clean: bool) -> int:
     entries.sort(key=sort_key)
 
     if clean:
-        for thumb in THUMB_DIR.glob("*.jpg"):
+        for thumb in thumb_dir.glob("*.jpg"):
             if thumb.name not in written:
                 thumb.unlink()
                 print(f"  removed orphaned thumbnail {thumb.name}")
 
-    MANIFEST.write_text(json.dumps(entries, indent=2) + "\n", encoding="utf-8")
-    print(f"\n{len(entries)} photograph(s) -> {MANIFEST.relative_to(ROOT)}")
+    manifest.write_text(json.dumps(entries, indent=2) + "\n", encoding="utf-8")
+    print(f"\n{len(entries)} photograph(s) -> {manifest}")
     return len(entries)
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Build the colour-sorted photography wall.")
-    ap.add_argument("--max", type=int, default=720, help="thumbnail long edge in px (default 720)")
+    ap.add_argument("--src", type=Path, default=PHOTO_DIR, help="folder holding the originals")
+    ap.add_argument("--out", type=Path, default=PHOTO_DIR, help="folder for web images + photos.json")
+    ap.add_argument("--max", type=int, default=1400, help="web image long edge in px (default 1400)")
     ap.add_argument("--clean", action="store_true", help="delete thumbnails with no source image")
     args = ap.parse_args()
-    build(args.max, args.clean)
+    build(args.src.expanduser(), args.out, args.max, args.clean)
 
 
 if __name__ == "__main__":

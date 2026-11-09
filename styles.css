@@ -551,13 +551,16 @@ main { display: block; }
   white-space: nowrap;
 }
 
-/* wall */
-.wall { --wall-gap: 14px; display: flex; align-items: flex-start; gap: var(--wall-gap, 10px); }
-.wall__col { flex: 1 1 0; display: flex; flex-direction: column; gap: var(--wall-gap, 10px); min-width: 0; }
+/* wall — justified rows: one height per row, widths from each aspect ratio */
+.wall { --wall-gap: 12px; display: flex; flex-direction: column; gap: var(--wall-gap, 12px); }
+.wall__row { display: flex; align-items: stretch; gap: var(--wall-gap, 12px); }
+.wall__row--tail { justify-content: flex-start; }
 
 .shot {
+  flex: 0 0 auto;
   position: relative;
   margin: 0;
+  height: 100%;
   background: color-mix(in srgb, var(--ink) 6%, var(--paper));
   overflow: hidden;
   cursor: zoom-in;
@@ -566,7 +569,8 @@ main { display: block; }
 .shot img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   transition: opacity .4s var(--ease);
   opacity: 0;
 }
@@ -765,7 +769,7 @@ figure img { display: block; max-width: 100%; height: auto; }
   .navmini { gap: 1rem; }
   .colourbar { top: 39px; }
   .colourbar__status { margin-left: 0; width: 100%; }
-  .wall { --wall-gap: 8px; }
+  .wall { --wall-gap: 6px; }
   .worklist a { grid-template-columns: minmax(0, 1fr); }
   .worklist .tag { grid-column: 1; grid-row: auto; }
 }
