@@ -459,8 +459,14 @@
     dropzone.append(btn);
   }
 
+  // Authoring is local-only. There is no upload endpoint on this site — the
+  // page is static — so the drop zone is a tool for choosing a shoot, not a
+  // public feature, and it only appears when you ask for it with ?add.
+  const AUTHORING = new URLSearchParams(location.search).has("add");
+
   ["dragenter", "dragover"].forEach((ev) =>
     document.addEventListener(ev, (e) => {
+      if (!AUTHORING) return;
       if (!e.dataTransfer || !Array.from(e.dataTransfer.types).includes("Files")) return;
       e.preventDefault();
       dropzone.classList.add("is-over");
@@ -468,6 +474,7 @@
   );
   ["dragleave", "drop"].forEach((ev) =>
     document.addEventListener(ev, (e) => {
+      if (!AUTHORING) return;
       if (ev === "drop" && e.dataTransfer && e.dataTransfer.files.length) {
         e.preventDefault();
         addFiles(e.dataTransfer.files);
@@ -479,6 +486,9 @@
     if (fileInput.files && fileInput.files.length) addFiles(fileInput.files);
     fileInput.value = "";
   });
+
+  if (AUTHORING) dropzone.hidden = false;
+  else dropzone.remove();
 
   /* ----------------------------------------------------------------- boot */
 
