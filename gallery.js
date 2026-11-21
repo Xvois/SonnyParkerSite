@@ -245,8 +245,10 @@
 
   function layout() {
     const list = all();
+    const scrollY = window.scrollY;
     wall.innerHTML = "";
     const width = wall.clientWidth || 1100;
+    layoutWidth = Math.round(width);
     const gap = parseFloat(getComputedStyle(wall).getPropertyValue("--wall-gap")) || 12;
     // One height per row and widths driven by each photograph's aspect ratio:
     // a landscape and a portrait sit in the same band, and the colour order
@@ -285,6 +287,16 @@
 
     applySelection();
     countEl.textContent = `${list.length} photograph${list.length === 1 ? "" : "s"}`;
+
+    // Emptied-and-refilled for a frame, which can clamp the scroll position.
+    // Put the reader back where they were, without smooth-scrolling to get there.
+    if (Math.abs(window.scrollY - scrollY) > 1) {
+      const de = document.documentElement;
+      const prev = de.style.scrollBehavior;
+      de.style.scrollBehavior = "auto";
+      window.scrollTo(0, scrollY);
+      de.style.scrollBehavior = prev;
+    }
   }
 
   /* ------------------------------------------------------------- selection */
@@ -492,22 +504,30 @@
 
   /* ----------------------------------------------------------------- boot */
 
+  // iOS Safari fires `resize` as the address bar collapses and expands mid
+  // scroll. Rebuilding the wall for a height-only change empties it for a frame,
+  // the document shrinks, and the browser clamps the scroll position to the top
+  // — which reads as "the page keeps jumping". So: re-layout only when the WIDTH
+  // changes, and preserve the scroll offset around any rebuild.
+  let layoutWidth = 0;
   let resizeTimer = null;
+
+  const relayoutIfWidthChanged = () => {
+    if (!state.photos.length) return;
+    const w = Math.round(wall.clientWidth);
+    if (!w || Math.abs(w - layoutWidth) < 8) return;
+    layout();
+  };
+
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(layout, 180);
+    resizeTimer = setTimeout(relayoutIfWidthChanged, 200);
   });
 
   // A device-metrics change or a font swap can resize the wall without firing a
   // window resize, so watch the element itself.
   if ("ResizeObserver" in window) {
-    let lastWidth = 0;
-    new ResizeObserver((entries) => {
-      const w = Math.round(entries[0].contentRect.width);
-      if (Math.abs(w - lastWidth) < 40) return;
-      lastWidth = w;
-      if (state.photos.length) layout();
-    }).observe(wall);
+    new ResizeObserver(relayoutIfWidthChanged).observe(wall);
   }
 
   buildControls();
