@@ -649,6 +649,7 @@ main { display: block; }
   font-size: .88rem;
 }
 .dropzone.is-over { border-color: var(--ink); background: var(--raise); }
+.dropzone[hidden] { display: none; }
 
 /* lightbox */
 dialog.lightbox {
