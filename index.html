@@ -3,67 +3,71 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sonny Parker | Homepage</title>
-    <meta name="description" content="Homepage for Sonny Parker." />
-    <!-- Shared styles are in styles.css -->
-    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+    <title>Sonny Parker</title>
+    <meta name="description" content="Sonny Parker — computational astrophysics at the University of Bath." />
+    <meta name="theme-color" content="#f6f5f1" />
+    <link rel="canonical" href="https://www.sonnyparker.co.uk/" />
 
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="prefetch" href="nbt.html">
-    <link rel="prefetch" href="juliaeuler.html">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Sonny Parker" />
+    <meta property="og:description" content="Computational astrophysics at the University of Bath." />
+    <meta property="og:url" content="https://www.sonnyparker.co.uk/" />
+    <meta name="twitter:card" content="summary_large_image" />
 
-    <script>
-      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }, svg: { fontCache: 'global' } };
-    </script>
-    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="styles.css" /></noscript>
+
+    <link rel="prefetch" href="research.html" />
+    <link rel="prefetch" href="photography.html" />
   </head>
-  <body>
-    <header class="dirnav" aria-label="Path">
-      <nav class="breadcrumbs">
-        <button class="crumb-back" type="button" onclick="history.back()" aria-label="Go back" disabled>←</button>
-        <span class="sep">/</span>
-        <span class="current">sonnyparker</span>
-      </nav>
+  <body class="landing">
+    <header class="topbar">
+      <span class="mark">sonnyparker</span>
+      <span class="loc">Bath, UK</span>
     </header>
-    <main>
-      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
-        <h1>Sonny Parker</h1>
-        <a href="mailto:contact@sonnyparker.co.uk">@contact</a>
+
+    <main class="stage">
+      <div class="stage-inner">
+        <div class="intro">
+          <p class="kicker">University of Bath</p>
+          <h1>Sonny Parker</h1>
+          <p class="tagline">Computational astrophysics student.</p>
+        </div>
+
+        <nav class="chooser" aria-label="Sections">
+          <a class="choice" href="research.html">
+            <span class="choice__top"><span>01</span></span>
+            <span>
+              <span class="choice__label">Research</span>
+              <span class="choice__sub">Thesis, projects and code</span>
+            </span>
+            <span class="choice__arrow" aria-hidden="true">→</span>
+          </a>
+
+          <a class="choice" href="photography.html">
+            <span class="choice__top"><span>02</span></span>
+            <span>
+              <span class="choice__label">Photography</span>
+              <span class="choice__sub">Photographs sorted by colour</span>
+            </span>
+            <span class="choice__arrow" aria-hidden="true">→</span>
+          </a>
+        </nav>
       </div>
-      <p>
-        I am a Computational Astrophysics student at the University of Bath interested in the dynamics of galaxies, their cores and SMBH interactions.
-      </p>
-      <h2>Projects</h2>
-      <p>A list of projects I think are interesting or took me long enough so I feel obligated to document:</p>
-      <section>
-        <h3>NBT</h3>
-        <p>
-          NBT is a simple N-body test.
-        </p>
-        <p>
-          <a href="nbt.html">View NBT page</a>
-        </p>
-      </section>
-      <section>
-        <h3>JuliaEuler</h3>
-        <p>
-          JuliaEuler is a numerical experiment project.
-        </p>
-        <p>
-          <a href="juliaeuler.html">View JuliaEuler page</a>
-        </p>
-      </section>
-      <section>
-        <h3>EDGE (Masters)</h3>
-        <p>
-          My Masters project on identifying molecular hydrogen in dwarf galaxy simulations.
-        </p>
-        <p>
-          <a href="edge.html">View EDGE page</a>
-        </p>
-      </section>
     </main>
+
+    <footer class="bottom">
+      <span><a href="mailto:contact@sonnyparker.co.uk">contact@sonnyparker.co.uk</a></span>
+    </footer>
+
     <script defer src="script.js"></script>
   </body>
 </html>

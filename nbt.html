@@ -3,14 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NBT | Sonny Parker</title>
+    <title>NBT — Sonny Parker</title>
     <meta name="description" content="NBT project page." />
+    <meta name="theme-color" content="#f6f5f1" />
     <!-- Shared styles are in styles.css -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="styles.css"></noscript>
 
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="preload" href="/resources/nbt/nbt-2k-tree.png" as="image">
 
     <script>
       window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }, svg: { fontCache: 'global' } };
@@ -26,8 +34,12 @@
         <span class="sep">/</span>
         <span class="current">nbt</span>
       </nav>
+      <nav class="navmini" aria-label="Sections">
+        <a href="research.html">Research</a>
+        <a href="photography.html">Photography</a>
+      </nav>
     </header>
-    <main>
+    <main class="legacy">
       <h1>NBT</h1>
       <p>
         NBT is a simple N-body test in C++ using the Barnes-Hut tree algorithm for efficient force calculations. 
@@ -63,6 +75,10 @@
           View NBT on GitHub
         </a>
       </p>
+      <footer class="foot">
+        <span><a href="mailto:contact@sonnyparker.co.uk">contact@sonnyparker.co.uk</a></span>
+        <span><a href="research.html">← Research</a></span>
+      </footer>
     </main>
     <script defer src="script.js"></script>
   </body>
