@@ -151,11 +151,13 @@ def caption_for(path: Path) -> str:
     return ""
 
 
-def build(src: Path, out: Path, max_edge: int, clean: bool) -> int:
+def build(src: Path, out: Path, max_edge: int, thumb_edge: int, clean: bool) -> int:
     if not src.is_dir():
         sys.exit(f"no photo directory at {src}")
     thumb_dir = out / "thumbs"
+    full_dir = out / "full"
     thumb_dir.mkdir(parents=True, exist_ok=True)
+    full_dir.mkdir(parents=True, exist_ok=True)
     manifest = out / "photos.json"
 
     files = sorted(
@@ -174,17 +176,27 @@ def build(src: Path, out: Path, max_edge: int, clean: bool) -> int:
 
     for path in files:
         rel_thumb = f"thumbs/{path.stem}.jpg"
+        rel_full = f"full/{path.stem}.jpg"
         thumb_path = thumb_dir / f"{path.stem}.jpg"
+        full_path = full_dir / f"{path.stem}.jpg"
         try:
             with Image.open(path) as im:
                 im = ImageOps.exif_transpose(im)
                 width, height = im.size
                 colour = summarise(im)
+                # Grid image and lightbox image are separate: the wall stays
+                # light, and opening a photograph actually gains resolution.
                 thumb = im.copy()
-                thumb.thumbnail((max_edge, max_edge), Image.Resampling.LANCZOS)
+                thumb.thumbnail((thumb_edge, thumb_edge), Image.Resampling.LANCZOS)
                 if thumb.mode not in ("RGB", "L"):
                     thumb = thumb.convert("RGB")
-                thumb.save(thumb_path, "JPEG", quality=84, optimize=True, progressive=True)
+                thumb.save(thumb_path, "JPEG", quality=82, optimize=True, progressive=True)
+
+                big = im.copy()
+                big.thumbnail((max_edge, max_edge), Image.Resampling.LANCZOS)
+                if big.mode not in ("RGB", "L"):
+                    big = big.convert("RGB")
+                big.save(full_path, "JPEG", quality=86, optimize=True, progressive=True)
         except Exception as err:  # noqa: BLE001 - report and keep going
             print(f"  failed {path.name}: {err}")
             continue
@@ -192,7 +204,7 @@ def build(src: Path, out: Path, max_edge: int, clean: bool) -> int:
         written.add(thumb_path.name)
         entries.append(
             {
-                "file": rel_thumb,
+                "file": rel_full,
                 "thumb": rel_thumb,
                 "w": width,
                 "h": height,
@@ -210,6 +222,10 @@ def build(src: Path, out: Path, max_edge: int, clean: bool) -> int:
             if thumb.name not in written:
                 thumb.unlink()
                 print(f"  removed orphaned thumbnail {thumb.name}")
+        for full in full_dir.glob("*.jpg"):
+            if full.name not in written:
+                full.unlink()
+                print(f"  removed orphaned full image {full.name}")
 
     manifest.write_text(json.dumps(entries, indent=2) + "\n", encoding="utf-8")
     print(f"\n{len(entries)} photograph(s) -> {manifest}")
@@ -220,10 +236,11 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Build the colour-sorted photography wall.")
     ap.add_argument("--src", type=Path, default=PHOTO_DIR, help="folder holding the originals")
     ap.add_argument("--out", type=Path, default=PHOTO_DIR, help="folder for web images + photos.json")
-    ap.add_argument("--max", type=int, default=1400, help="web image long edge in px (default 1400)")
-    ap.add_argument("--clean", action="store_true", help="delete thumbnails with no source image")
+    ap.add_argument("--max", type=int, default=2400, help="lightbox image long edge (default 2400)")
+    ap.add_argument("--thumb", type=int, default=1000, help="wall image long edge (default 1000)")
+    ap.add_argument("--clean", action="store_true", help="delete images with no source photograph")
     args = ap.parse_args()
-    build(args.src.expanduser(), args.out, args.max, args.clean)
+    build(args.src.expanduser(), args.out, args.max, args.thumb, args.clean)
 
 
 if __name__ == "__main__":
