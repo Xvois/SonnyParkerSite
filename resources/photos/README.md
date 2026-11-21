@@ -12,17 +12,19 @@ arranged by its dominant colour.
    python3 scripts/photos.py --src ~/Pictures/icloud-shared-album
    ```
 
-   It orients each frame, writes a web-sized JPEG into `thumbs/` (1400px long
-   edge by default), works out the dominant colour, and rewrites `photos.json`.
+   It orients each frame, writes two JPEGs — `thumbs/` for the wall (1000px
+   long edge) and `full/` for the lightbox (2400px) — works out the dominant
+   colour, and rewrites `photos.json`.
 
-3. Reload `photography.html`. To publish, commit `photos.json` and `thumbs/` —
-   the page is static, so nothing is generated at deploy time.
+3. Reload `photography.html`. To publish, commit `photos.json`, `thumbs/` and
+   `full/` — the page is static, so nothing is generated at deploy time.
 
 | Command | What it does |
 |---|---|
-| `python3 scripts/photos.py --src DIR` | Build web images + manifest from DIR |
-| `python3 scripts/photos.py --clean` | Also delete web images whose source is gone |
-| `python3 scripts/photos.py --max 2000` | Larger web images (default 1400px) |
+| `python3 scripts/photos.py --src DIR` | Build both image sets + manifest from DIR |
+| `python3 scripts/photos.py --clean` | Also delete images whose source is gone |
+| `python3 scripts/photos.py --max 3200` | Larger lightbox images (default 2400px) |
+| `python3 scripts/photos.py --thumb 1400` | Larger wall images (default 1000px) |
 
 JPEG, PNG, WebP, AVIF and TIFF are read. HEIC is skipped — export a JPEG first.
 

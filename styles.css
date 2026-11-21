@@ -663,25 +663,30 @@ dialog.lightbox {
   overflow: hidden;
 }
 dialog.lightbox::backdrop { background: rgba(12, 12, 10, .95); backdrop-filter: blur(3px); }
+body:has(dialog.lightbox[open]) { overflow: hidden; }
 .lightbox__inner {
+  position: relative;
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: .6rem;
-  padding: clamp(.8rem, 2.5vw, 1.6rem);
   color: #eee;
 }
 .lightbox__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  padding: .8rem clamp(.8rem, 2.5vw, 1.4rem);
   font-family: var(--mono);
   font-size: .7rem;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, .68);
+  color: rgba(255, 255, 255, .72);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, .55), transparent);
 }
 .lightbox__bar button {
   appearance: none;
@@ -696,10 +701,13 @@ dialog.lightbox::backdrop { background: rgba(12, 12, 10, .95); backdrop-filter: 
 }
 .lightbox__bar button:hover { background: rgba(255, 255, 255, .14); border-color: #fff; }
 .lightbox__stage {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 0;
+  padding: 0;
 }
 .lightbox__stage img {
   max-width: 100%;
@@ -709,13 +717,20 @@ dialog.lightbox::backdrop { background: rgba(12, 12, 10, .95); backdrop-filter: 
   object-fit: contain;
 }
 .lightbox__foot {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
+  padding: .7rem clamp(.8rem, 2.5vw, 1.4rem);
   font-family: var(--mono);
   font-size: .68rem;
   letter-spacing: .08em;
-  color: rgba(255, 255, 255, .55);
+  color: rgba(255, 255, 255, .6);
+  background: linear-gradient(to top, rgba(0, 0, 0, .6), transparent);
 }
 
 /* ==========================================================================
